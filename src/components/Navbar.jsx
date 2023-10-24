@@ -27,7 +27,7 @@ const Navbar = () => {
         <ul className='hidden md:flex items-center space-x-4 list-none'>            
            {
             Links.map((link)=>(
-                <li className='hover:scale-105 ease-linear bg-white rounded-xl p-2 px-3 shadow-md '>
+                <li className='hover:scale-105 ease-linear bg-white rounded-xl p-2 px-3 shadow-md cursor-pointer'>
                     <a href={link.link} target='_blank' title={link.name}>{link.logo}</a>
                 </li>
             ))
@@ -57,7 +57,7 @@ const Navbar = () => {
       <div className={`md:hidden ${isOpen ? 'flex' : 'hidden'} absolute right-2`}>
         <ul className='items-center space-y-4 list-none rounded-2xl shadow-md '>
           {Links.map((link, index) => (
-            <li key={index} className='hover:scale-105 ease-linear bg-white rounded-xl p-2 px-3 shadow-md'>
+            <li key={index} className='hover:scale-105 ease-linear bg-white rounded-xl p-2 px-3 shadow-md cursor-pointer'>
               <a href={link.link} className='flex items-center justify-evenly w-[100px]' target='_blank'>{link.name}{link.logo}</a>
             </li>
           ))}

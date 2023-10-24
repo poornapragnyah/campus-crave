@@ -2,9 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html {
+    font-family:system-ui, sans-serif;
+  }
+}
+
 body{
   background-color: #FEBF19;
   /* background-image: url('./assets/campus.png');
-  background-size: contain;
+  background-size:contain;
   background-repeat:round; */
 }

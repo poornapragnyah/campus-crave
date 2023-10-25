@@ -14,3 +14,9 @@ body{
   background-size:contain;
   background-repeat:round; */
 }
+
+@layer components {
+  .input-box{
+    @apply px-5 py-3 items-center rounded-lg bg-white focus:outline-none shadow-md ;
+  }
+}

@@ -30,6 +30,7 @@ const CartItems = () => {
     setCartItems(updatedCartItems);
   };
 
+  // it can take negative quantities rn
   return (
     <div className="h-screen py-8">
       <div className="container mx-auto px-4">

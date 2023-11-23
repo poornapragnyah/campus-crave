@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import CartItem from './CartItem';
-import checkout from '../pages/checkout';
 import { NavLink } from 'react-router-dom';
 
 const CartItems = () => {
@@ -75,7 +74,7 @@ const CartItems = () => {
                 <span className="font-semibold">Total</span>
                 <span className="font-semibold">₹{totalPrice}</span>
               </div>
-              <NavLink to="/checkout"><button className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full">Checkout</button></NavLink>
+              <NavLink to='/checkout'><button className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full">Checkout</button></NavLink>
             </div>
           </div>
         </div>

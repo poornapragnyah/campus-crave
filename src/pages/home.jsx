@@ -8,7 +8,7 @@ const Home = () => {
     <div>
         <Offers caption="Order now and get 10% off"/>
         <Navbar />       
-        <ShopCards/>
+        <ShopCards page='/'/>
     </div>
   )
 }

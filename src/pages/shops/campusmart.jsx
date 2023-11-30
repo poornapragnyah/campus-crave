@@ -3,9 +3,9 @@ import Offers from '../../components/Offers';
 import Navbar from '../../components/Navbar';
 import ShopItem from '../../components/ShopItem';
 
-const HalliMane = () => {
+const CampusMart = () => {
   const [shopItems, setShopItems] = useState([]);
-  const apiUrl = 'http://localhost:4000/api/shops/halli-mane';
+  const apiUrl = 'http://localhost:4000/api/shops/campus-mart';
 
   useEffect(() => {
     const fetchShopItems = async () => {
@@ -36,4 +36,4 @@ const HalliMane = () => {
   );
 };
 
-export default HalliMane;
+export default CampusMart;

@@ -5,7 +5,6 @@ const CartItem = ({ item, onRemove, onQuantityChange }) => {
     <tr>
       <td className="py-4">
         <div className="flex items-center">
-          <img className="h-16 w-16 mr-4" src="https://via.placeholder.com/150" alt="Product image" />
           <span className="font-semibold">{item.name}</span>
         </div>
       </td>

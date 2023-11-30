@@ -1,15 +1,14 @@
 import React from 'react'
-import { NavLink} from 'react-router-dom'
-import { useState } from 'react';
+import { NavLink,useNavigate} from 'react-router-dom'
+import { useState, } from 'react';
 
 const signup = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    // Assuming you have a signup endpoint like '/api/signup'
     const apiUrl = 'http://localhost:4000/api/signup';
     try {
       const response = await fetch(apiUrl, {
@@ -29,17 +28,10 @@ const signup = () => {
         // Failed to sign up
         const errorData = await response.json();
         console.error('Signup failed:', errorData.error);
-
-        // Handle the error, e.g., display an error message to the user
       }
     } catch (error) {
-      // Handle network or other errors
       console.error('Error during signup:', error);
-
-      // Handle the error, e.g., display a generic error message to the user
     }
-
-    // Reset the form fields
     setUsername('');
     setPassword('');
   };

@@ -14,6 +14,8 @@ import AdminPanel from './pages/adminPanel'
 //shop pages
 import Cantina from './pages/shops/cantina'
 import HalliMane from './pages/shops/halli-mane'
+import PesCanteen from './pages/shops/pes-canteen'
+import CampusMart from './pages/shops/campusmart'
 
 function App() {
   
@@ -32,6 +34,8 @@ function App() {
           <Route path='/admin/shops/cantina' element={<AdminPanel page='cantina'/>}/>
           <Route path='/shops/cantina' element={<Cantina/>}/>
           <Route path='/shops/halli-mane' element={<HalliMane/>}/>
+          <Route path='/shops/pes-canteen' element={<PesCanteen/>}/>
+          <Route path='/shops/campus-mart' element={<CampusMart/>}/>
         </Routes>
       </BrowserRouter>
     </>

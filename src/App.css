@@ -13,3 +13,8 @@
 .bounce {
   animation: bounce 2.5s ease-in-out 1;
 }
+
+.bounce1 {
+  animation: bounce 2s ease-in-out 1;
+}
+

@@ -1,43 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
+import '../App.css'
 
 const ShopItem = (props) => { 
-
+  const [Added, setAdded] = useState(0);
   const addToCart = async (event) => {
     event.preventDefault();
-
-    // Assuming you have a signup endpoint like '/api/signup'
-    const apiUrl = 'http://localhost:4000/api/signup';
-    try {
-      const response = await fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
-      });
-
-      if (response.ok) {
-        // Successfully signed up
-        const userData = await response.json();
-        console.log('Signup successful:', userData);
-        navigate('/home')
-      } else {
-        // Failed to sign up
-        const errorData = await response.json();
-        console.error('Signup failed:', errorData.error);
-
-        // Handle the error, e.g., display an error message to the user
-      }
-    } catch (error) {
-      // Handle network or other errors
-      console.error('Error during signup:', error);
-
-      // Handle the error, e.g., display a generic error message to the user
-    }
+    console.log("Added Item to Cart!");
+    setAdded(1);
   }
 
   return (
-    <div className='bg-white rounded-lg shadown-lg p-4 m-4 inline-block w-96 h-32 relative'>
+    <div className={`bg-white rounded-lg shadown-lg p-4 m-4 inline-block w-96 h-32 relative ${Added ? "bounce1":""}`}>
       
       <div className="flex justify-between items-center">
       <p className='text-2xl m-3 font-bold'>{props.title}</p>

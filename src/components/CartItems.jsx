@@ -1,32 +1,54 @@
-import React, { useState, useEffect } from 'react';
-import CartItem from './CartItem';
-import { NavLink } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import CartItem from "./CartItem";
+import { NavLink } from "react-router-dom";
 
 const CartItems = () => {
   const initialItems = [
-    { id: 1, name: "Cup Noodles", price: 20, quantity: 0 },
-    { id: 2, name: "Burger", price: 20, quantity: 0 },
+    { id: 1, name: "Tea", price: 20, quantity: 1 },
+    { id: 2, name: "Samosa Chat", price: 50, quantity: 1 },
   ];
 
   const [cartItems, setCartItems] = useState(initialItems);
+  const apiUrl = "http://localhost:4000/api/cart";
+  const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
+    console.log("inside cart items");
+    // Fetching cart items
+    const fetchCartItems = async () => {
+      try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+          throw new Error("Failed to fetch cart items");
+        }
+        const json = await response.json();
+        console.log(json);
+        setCartItems(json);
+      } catch (error) {
+        console.error("Error fetching cart items:", error.message);
+      }
+    };
+
+    fetchCartItems();
+  }, []);
+  useEffect(() => {
     // Calculate the total price whenever cartItems change
-    const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    const total = cartItems.reduce(
+      (acc, item) => acc + item.cost * item.quantity,
+      0
+    );
+    console.log(total);
     setTotalPrice(total);
   }, [cartItems]);
 
-  const [totalPrice, setTotalPrice] = useState(0);
-
   const handleRemoveItem = (id) => {
-    const updatedCartItems = cartItems.filter(item => item.id !== id);
+    const updatedCartItems = cartItems.filter((item) => item._id !== id);
     setCartItems(updatedCartItems);
   };
 
   const handleQuantityChange = (id, newQuantity) => {
-
-    const updatedCartItems = cartItems.map(item =>
-      item.id === id ? { ...item, quantity: Math.max(newQuantity,0) } : item
+    const updatedCartItems = cartItems.map((item) =>
+      item._id === id ? { ...item, quantity: Math.max(newQuantity, 0) } : item
     );
     setCartItems(updatedCartItems);
   };
@@ -47,14 +69,18 @@ const CartItems = () => {
                     <th className="text-left font-semibold">Remove</th>
                   </tr>
                 </thead>
-                {cartItems.map(item => (
-                  <CartItem
-                    key={item.id}
-                    item={item}
-                    onRemove={() => handleRemoveItem(item.id)}
-                    onQuantityChange={newQuantity => handleQuantityChange(item.id, newQuantity)}
-                  />
-                ))}
+                <tbody>
+                  {cartItems.map((item) => (
+                    <CartItem
+                      key={item._id}
+                      item={item}
+                      onRemove={() => handleRemoveItem(item._id)}
+                      onQuantityChange={(newQuantity) =>
+                        handleQuantityChange(item._id, newQuantity)
+                      }
+                    />
+                  ))}
+                </tbody>
               </table>
             </div>
           </div>
@@ -62,17 +88,25 @@ const CartItems = () => {
             <div className="bg-white rounded-lg shadow-md p-6">
               <h2 className="text-lg font-semibold mb-4">Summary</h2>
               <hr className="my-2" />
-              {cartItems.map(item => (
-                <div key={item.id} className="flex justify-between mb-2">
-                  <span className="font-semibold">{item.name} x{item.quantity}</span>
-                  <span className="font-semibold">₹{item.price * item.quantity}</span>
+              {cartItems.map((item) => (
+                <div key={item._id} className="flex justify-between mb-2">
+                  <span className="font-semibold">
+                    {item.title} x{item.quantity}
+                  </span>
+                  <span className="font-semibold">
+                    ₹{item.cost * item.quantity}
+                  </span>
                 </div>
               ))}
               <div className="flex justify-between mb-2">
                 <span className="font-semibold">Total</span>
                 <span className="font-semibold">₹{totalPrice}</span>
               </div>
-              <NavLink to='/checkout'><button className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full">Checkout</button></NavLink>
+              <NavLink to="/checkout">
+                <button className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full">
+                  Checkout
+                </button>
+              </NavLink>
             </div>
           </div>
         </div>

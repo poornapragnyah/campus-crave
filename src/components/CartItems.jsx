@@ -41,16 +41,46 @@ const CartItems = () => {
     setTotalPrice(total);
   }, [cartItems]);
 
-  const handleRemoveItem = (id) => {
-    const updatedCartItems = cartItems.filter((item) => item._id !== id);
-    setCartItems(updatedCartItems);
+  const handleRemoveItem = async (id) => {
+    try {
+      const response = await fetch(`${apiUrl}/${id}`, {
+        method: "DELETE",
+      });
+      if (!response.ok) {
+        throw new Error("Failed to remove item from cart");
+      }
+      const updatedCartItems = cartItems.filter((item) => item._id !== id);
+      setCartItems(updatedCartItems);
+    } catch (error) {
+      console.error("Error removing item from cart:", error);
+    }
   };
 
-  const handleQuantityChange = (id, newQuantity) => {
-    const updatedCartItems = cartItems.map((item) =>
-      item._id === id ? { ...item, quantity: Math.max(newQuantity, 0) } : item
-    );
-    setCartItems(updatedCartItems);
+  const handleQuantityChange = async (id, newQuantity) => {
+    try {
+      console.log(`${apiUrl}/${id}`);
+      const response = await fetch(`${apiUrl}/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ quantity: newQuantity }),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to update item quantity");
+      }
+      const updatedCartItems = cartItems.map((item) =>
+        item._id === id ? { ...item, quantity: Math.max(newQuantity, 0) } : item
+      );
+      for (const item of updatedCartItems) {
+        if (item.quantity === 0) {
+          await handleRemoveItem(item._id);
+        }
+      }
+      setCartItems(updatedCartItems);
+    } catch (error) {
+      console.error("Error updating item quantity:", error);
+    }
   };
 
   return (

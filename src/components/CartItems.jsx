@@ -3,7 +3,12 @@ import CartItem from "./CartItem";
 import { NavLink } from "react-router-dom";
 
 const CartItems = () => {
-  const [cartItems, setCartItems] = useState([]);
+  const initialItems = [
+    { id: 1, name: "Tea", price: 20, quantity: 1 },
+    { id: 2, name: "Samosa Chat", price: 50, quantity: 1 },
+  ];
+
+  const [cartItems, setCartItems] = useState(initialItems);
   const apiUrl = "http://localhost:4000/api/cart";
   const [totalPrice, setTotalPrice] = useState(0);
 
@@ -36,50 +41,7 @@ const CartItems = () => {
     setTotalPrice(total);
   }, [cartItems]);
 
-  const handleRemoveItem = async (id) => {
-    console.log(`${apiUrl}/${id}`);
-    try {
-      const response = await fetch(`${apiUrl}/${id}`, {
-        method: "DELETE",
-      });
-      if (!response.ok) {
-        throw new Error("Failed to remove item from cart");
-      }
-      const updatedCartItems = cartItems.filter((item) => item._id !== id);
-      setCartItems(updatedCartItems);
-    } catch (error) {
-      console.error("Error removing item from cart:", error);
-    }
-  };
-
-  const handleQuantityChange = async (id, newQuantity) => {
-    try {
-      console.log(`${apiUrl}/${id}`);
-      const response = await fetch(`${apiUrl}/${id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ quantity: newQuantity }),
-      });
-      if (!response.ok) {
-        throw new Error("Failed to update item quantity");
-      }
-      const updatedCartItems = cartItems.map((item) =>
-        item._id === id ? { ...item, quantity: Math.max(newQuantity, 0) } : item
-      );
-      for (const item of updatedCartItems) {
-        if (item.quantity === 0) {
-          handleRemoveItem(item._id);
-        }
-      }
-      setCartItems(updatedCartItems);
-    } catch (error) {
-      console.error("Error updating item quantity:", error);
-    }
-  };
-
-  /*const handleRemoveItem = (id) => {
+  const handleRemoveItem = (id) => {
     const updatedCartItems = cartItems.filter((item) => item._id !== id);
     setCartItems(updatedCartItems);
   };
@@ -89,7 +51,7 @@ const CartItems = () => {
       item._id === id ? { ...item, quantity: Math.max(newQuantity, 0) } : item
     );
     setCartItems(updatedCartItems);
-  }; */
+  };
 
   return (
     <div className="h-screen py-8">

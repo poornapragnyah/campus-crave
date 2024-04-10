@@ -8,8 +8,8 @@ const ShopItem = (props) => {
   const addToCart = async (event) => {
     event.preventDefault();
     const itemData = {
-      title: props.title,
-      cost: props.cost,
+      name: props.title,
+      price: props.cost,
       quantity: props.quantity,
     };
 

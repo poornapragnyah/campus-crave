@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "../App.css";
 
 const ShopItem = (props) => {
@@ -29,16 +31,16 @@ const ShopItem = (props) => {
       const responseData = await response.json();
       console.log("Item added to cart successfully:", responseData);
       setAdded(1);
+      toast.success("Item added to cart!", { autoClose: 1500 });
     } catch (error) {
       console.error("Error adding item to cart:", error);
+      toast.error("Error adding item to cart!", { autoClose: 1500 });
     }
   };
 
   return (
     <div
-      className={`bg-white rounded-lg shadown-lg p-4 m-4 inline-block w-96 h-32 relative ${
-        Added ? "bounce1" : ""
-      }`}
+      className={`bg-white rounded-lg shadown-lg p-4 m-4 inline-block w-96 h-32 relative`}
     >
       <div className="flex justify-between items-center">
         <p className="text-2xl m-3 font-bold">{props.title}</p>

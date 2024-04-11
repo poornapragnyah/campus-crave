@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import CartItem from "./CartItem";
 import { NavLink } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const CartItems = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -46,6 +48,7 @@ const CartItems = () => {
       }
       const updatedCartItems = cartItems.filter((item) => item._id !== id);
       setCartItems(updatedCartItems);
+      toast.success("Item removed from the cart!", { autoClose: 1500 });
     } catch (error) {
       console.error("Error removing item from cart:", error);
     }

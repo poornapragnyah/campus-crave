@@ -1,57 +1,83 @@
-import React from 'react'
-import '../index.css'
-import { NavLink,useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import React from "react";
+import "../index.css";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
-    
-    const apiUrl = 'http://localhost:4000/api/login';
+
+    const apiUrl = "http://localhost:4000/api/login";
     try {
       const response = await fetch(apiUrl, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ username, password }),
       });
-  
+
       if (response.ok) {
         // Successfully logged in
         const userData = await response.json();
-        console.log('Login successful:', userData);
-        navigate('/home');
+        console.log("Login successful:", userData);
+        toast.success("Login successful!", { autoClose: 1500 });
+        navigate("/home");
       } else {
         const errorData = await response.json();
-        console.error('Login failed:', errorData.error);
-        alert("Login failed :/");
+        console.error("Login failed:", errorData.error);
+        toast.error("Login unsuccessful!", { autoClose: 1500 });
       }
     } catch (error) {
-
-      console.error('Error during login:', error);
+      console.error("Error during login:", error);
     }
-    setUsername('');
-    setPassword('');
+    setUsername("");
+    setPassword("");
   };
-  
+
   return (
     <form onSubmit={handleSubmit}>
-    <div className='flex flex-col justify-center items-center shadow-lg h-[100vh]'>
-        <div className='flex flex-col justify-center items-center space-y-3 bg-white w-72 rounded-lg p-4 m-2 shadow-lg'>
-            <p className='text-2xl p-2 font-semibold mb-2'>Login</p>           
-                  <input placeholder='Username' className='input-box' value={username} onChange={(e)=>setUsername(e.target.value)}/>
-                  <input placeholder='Password' className='input-box' value={password} onChange={(e)=>setPassword(e.target.value)} type='password'/>
-                  <button onClick={handleSubmit} className='p-3 m-2 w-60 text-center bg-yellow-200 rounded-lg'>Login!</button>
-            <p className='text-sm p-2 mt-4'>New here? <NavLink to="/signup" className={'text-orange-400 underline text-sm'}> Create an account!</NavLink></p>
+      <div className="flex flex-col justify-center items-center shadow-lg h-[100vh]">
+        <div className="flex flex-col justify-center items-center space-y-3 bg-white w-72 rounded-lg p-4 m-2 shadow-lg">
+          <p className="text-2xl p-2 font-semibold mb-2">Login</p>
+          <input
+            placeholder="Username"
+            className="input-box"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <input
+            placeholder="Password"
+            className="input-box"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
+          />
+          <button
+            onClick={handleSubmit}
+            className="p-3 m-2 w-60 text-center bg-yellow-200 rounded-lg"
+          >
+            Login!
+          </button>
+          <p className="text-sm p-2 mt-4">
+            New here?{" "}
+            <NavLink
+              to="/signup"
+              className={"text-orange-400 underline text-sm"}
+            >
+              {" "}
+              Create an account!
+            </NavLink>
+          </p>
         </div>
       </div>
     </form>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

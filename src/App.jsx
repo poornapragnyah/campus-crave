@@ -11,6 +11,7 @@ import Cart from "./pages/cart";
 import Checkout from "./pages/checkout";
 import Admin from "./pages/admin";
 import AdminPanel from "./pages/adminPanel";
+import NotFound from "./pages/NotFound";
 
 //shop pages
 import Cantina from "./pages/shops/cantina";
@@ -39,6 +40,7 @@ function App() {
           <Route path="/shops/halli-mane" element={<HalliMane />} />
           <Route path="/shops/pes-canteen" element={<PesCanteen />} />
           <Route path="/shops/campus-mart" element={<CampusMart />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </>

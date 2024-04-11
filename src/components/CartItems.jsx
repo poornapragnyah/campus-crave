@@ -3,12 +3,7 @@ import CartItem from "./CartItem";
 import { NavLink } from "react-router-dom";
 
 const CartItems = () => {
-  const initialItems = [
-    { id: 1, name: "Tea", price: 20, quantity: 1 },
-    { id: 2, name: "Samosa Chat", price: 50, quantity: 1 },
-  ];
-
-  const [cartItems, setCartItems] = useState(initialItems);
+  const [cartItems, setCartItems] = useState([]);
   const apiUrl = "http://localhost:4000/api/cart";
   const [totalPrice, setTotalPrice] = useState(0);
 
@@ -69,15 +64,17 @@ const CartItems = () => {
       if (!response.ok) {
         throw new Error("Failed to update item quantity");
       }
-      const updatedCartItems = cartItems.map((item) =>
+      let updatedCartItems = cartItems.map((item) =>
         item._id === id ? { ...item, quantity: Math.max(newQuantity, 0) } : item
       );
       for (const item of updatedCartItems) {
         if (item.quantity === 0) {
           await handleRemoveItem(item._id);
         }
+        updatedCartItems = updatedCartItems.filter((item) => item.quantity > 0);
+
+        setCartItems(updatedCartItems);
       }
-      setCartItems(updatedCartItems);
     } catch (error) {
       console.error("Error updating item quantity:", error);
     }
